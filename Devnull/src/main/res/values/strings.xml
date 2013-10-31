@@ -2,7 +2,14 @@
 <resources>
 
     <string name="app_name">Dev null</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="title">NULL IT!</string>
     <string name="action_settings">Settings</string>
+    <string name="null_button">Null</string>
+
+    <string name="null_it_edit_text_validation_error_empty">Enter text to null it!</string>
+
+    <string name="progress_dialog_nulling">Nulling your data…</string>
+    <string name="toast_null_success">Your data was nulled successfully!</string>
+    <string name="toast_null_network_error">Can not null your data, network problem</string>
 
 </resources>

@@ -25,6 +25,7 @@ local.properties
 *.idea/
 *.iml
 
+.gradle/
 gradle/
 gradlew
 gradlew.bat

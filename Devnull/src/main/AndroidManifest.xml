@@ -8,20 +8,37 @@
         android:minSdkVersion="14"
         android:targetSdkVersion="18" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
         <activity
-            android:name="com.artemzin.android.dev_null.MainActivity"
+            android:name=".activity.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="text/*" />
+
+                <!-- TODO implement in next release
+                                <data android:mimeType="application/*" />
+                                <data android:mimeType="audio/*" />
+                                <data android:mimeType="image/*" />
+                                <data android:mimeType="message/*" />
+                                <data android:mimeType="multipart/*" />
+                                <data android:mimeType="video/*" />
+                -->
+            </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
