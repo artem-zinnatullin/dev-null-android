@@ -15,14 +15,19 @@ import android.widget.Toast;
 import com.artemzin.android.dev_null.R;
 import com.artemzin.android.dev_null.api.dev_null.DevNullApi;
 import com.artemzin.android.dev_null.api.network.NetworkException;
+import com.artemzin.android.dev_null.util.ActivityUtil;
 import com.artemzin.android.dev_null.util.StringUtil;
 import com.artemzin.android.dev_null.util.TextValidator;
 import com.artemzin.android.dev_null.util.ThreadUtil;
 
 public class MainFragment extends Fragment {
 
+    private static final String STATE_BUNDLE_NULL_IT_TEXT = "STATE_BUNDLE_NULL_IT_TEXT";
+
     private EditText nullItEditText;
     private Button   nullItButton;
+
+    private Intent lastIntent;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,6 +43,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         nullItEditText = (EditText) view.findViewById(R.id.null_it_edit_text);
         nullItButton   = (Button)   view.findViewById(R.id.null_it_button);
         nullItButton.setEnabled(false);
@@ -62,6 +68,8 @@ public class MainFragment extends Fragment {
         nullItButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ActivityUtil.hideSoftKeyboard(getActivity());
+
                 final ProgressDialogFragment progressDialogFragment = ProgressDialogFragment.newInstance(getString(R.string.progress_dialog_nulling));
                 progressDialogFragment.setCancelable(false);
                 progressDialogFragment.show(getFragmentManager(), "progressDialogFragment");
@@ -101,6 +109,10 @@ public class MainFragment extends Fragment {
                 }.execute();
             }
         });
+
+        if (savedInstanceState != null) {
+            nullItEditText.setText(savedInstanceState.getString(STATE_BUNDLE_NULL_IT_TEXT, ""));
+        }
     }
 
     @Override
@@ -109,10 +121,24 @@ public class MainFragment extends Fragment {
 
         final Intent intent = getActivity().getIntent();
 
-        if (intent != null && "android.intent.action.SEND".equals(intent.getAction())) {
+        if (intent == null || intent.equals(lastIntent)) return;
+
+        if ("android.intent.action.SEND".equals(intent.getAction())) {
             if ("text/plain".equals(intent.getType())) {
                 nullItEditText.setText(intent.getStringExtra(Intent.EXTRA_TEXT));
+                nullItEditText.setSelection(nullItEditText.getText().toString().length());
             }
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        final String nullItText = nullItEditText.getText().toString();
+
+        if (!StringUtil.isNullOrEmpty(nullItText)) {
+            outState.putString(STATE_BUNDLE_NULL_IT_TEXT, nullItText);
+        }
+
+        super.onSaveInstanceState(outState);
     }
 }
