@@ -1,6 +1,8 @@
 ###Dev null as Service comes to android!
 
-Download Devnull.apk from repo and enjoy nulling texts from your android! You can use share intent for it!
+#####What is Dev-Null-As-Service? Here is the link: http://devnull-as-a-service.com/home/
+
+You can download Devnull.apk from repo or build it from sources and enjoy nulling texts from your android! You can use share intent for it!
 
 ####Screenshots:
  
